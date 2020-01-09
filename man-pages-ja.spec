@@ -1,6 +1,6 @@
 Name: man-pages-ja
 Version: 20100115
-Release: 5%{?dist}
+Release: 6%{?dist}
 # Actual license for each Japanese manpages is the same to the original English manpages' license.
 License: Freely redistributable without restriction
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -39,6 +39,8 @@ Patch35: man-pages-ja-565362-iptables.8.patch
 Patch36: man-pages-ja-600321-snmpd.conf.5.patch
 Patch37: man-pages-ja-669646-pmap.1.patch
 Patch38: man-pages-ja-683019-getpriority.2.patch
+Patch39: man-pages-ja-949787-shmat.2.patch
+Patch40: man-pages-ja-957937-strtoul.3.patch
 
 Summary: Japanese man (manual) pages from the Japanese Manual Project
 Group: Documentation
@@ -73,6 +75,8 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch36 -p1 -b .36-snmpd-conf
 %patch37 -p1 -b .37-pmap
 %patch38 -p1 -b .38-getpriority
+%patch39 -p1 -b .39-shmat
+%patch40 -p1 -b .40-strtoul
 
 %build
 perl %{SOURCE1} '$DESTDIR' | make
@@ -164,6 +168,10 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jun 24 2013 Akira TAGOH <tagoh@redhat.com> - 20100115-6
+- Fix a typo in shmat(2) (#949787)
+- Fix a typo in strtoul(3) (#957937)
+
 * Wed Jul 13 2011 Akira TAGOH <tagoh@redhat.com> - 20100115-5
 - Add further missing manpages for upstart. (#579641)
 
