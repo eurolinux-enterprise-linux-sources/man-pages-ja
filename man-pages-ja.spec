@@ -1,6 +1,6 @@
 Name: man-pages-ja
 Version: 20100115
-Release: 8%{?dist}
+Release: 10%{?dist}
 # Actual license for each Japanese manpages is the same to the original English manpages' license.
 License: Freely redistributable without restriction
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -45,6 +45,9 @@ Patch40: man-pages-ja-957937-strtoul.3.patch
 Patch41: man-pages-ja-976137-sudoers.5.patch
 Patch42: man-pages-ja-993511-crontab.1.patch
 Patch43: man-pages-ja-1035088-nfs.5.patch
+Patch44: man-pages-ja-1157413-date.1.patch
+Patch45: man-pages-ja-1173391-nfs.5.patch
+Patch46: man-pages-ja-1174088-xinetd.8.patch
 
 Summary: Japanese man (manual) pages from the Japanese Manual Project
 Group: Documentation
@@ -84,6 +87,9 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch41 -p1 -b .41-sudoers
 %patch42 -p1 -b .42-crontab
 %patch43 -p1 -b .43-nfs
+%patch44 -p1 -b .44-date
+%patch45 -p1 -b .45-nfs
+%patch46 -p1 -b .46-xinetd
 
 %build
 perl %{SOURCE1} '$DESTDIR' | make
@@ -178,6 +184,15 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jan 22 2015 Akira TAGOH <tagoh@redhat.com> - 201001155-10
+- Apply the change of date(1) properly. (#1157413)
+
+* Wed Jan 14 2015 Akira TAGOH <tagoh@redhat.com> - 20100115-9
+- Fix a typo in shmat(2) (#1140481)
+- Add missing %%n and %%N description for date(1) (#1157413)
+- Add deprecation remarks for intr in nfs(5) (#1173391)
+- Fix a typo in xinetd(8) (#1174088)
+
 * Mon Jun  2 2014 Akira TAGOH <tagoh@redhat.com> - 20100115-8
 - Fix nfs(5) (#1035088)
 
