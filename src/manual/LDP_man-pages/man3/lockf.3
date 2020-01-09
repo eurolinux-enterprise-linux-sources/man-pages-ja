@@ -1,0 +1,161 @@
+.\" Copyright 1997 Nicolas Lichtmaier <nick@debian.org>
+.\" Created Thu Aug  7 00:44:00 ART 1997
+.\"
+.\" This is free documentation; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 2 of
+.\" the License, or (at your option) any later version.
+.\"
+.\" The GNU General Public License's references to "object code"
+.\" and "executables" are to be interpreted as the output of any
+.\" document formatting or typesetting system, including
+.\" intermediate and printed output.
+.\"
+.\" This manual is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" Added section stuff, aeb, 2002-04-22.
+.\" Corrected include file, drepper, 2003-06-15.
+.\"
+.\" Japanese Version Copyright (c) 2000-2002 Yuichi SATO
+.\"         all rights reserved.
+.\" Translated Tue Jul 11 19:02:58 JST 2000
+.\"         by Yuichi SATO <ysato@h4.dion.ne.jp>
+.\" Updated & Modified Mon Jul 15 02:10:29 JST 2002 by Yuichi SATO
+.\"
+.\"WORD:	apply		適用
+.\"WORD:	remove		解除
+.\"WORD:	exclusive	排他
+.\"WORD:	descriptor	ディスクリプタ
+.\"WORD:	
+.\"
+.TH LOCKF 3 2009-03-30 "GNU" "Linux Programmer's Manual"
+.SH 名前
+lockf \- 開いているファイルに対して POSIX ロックを適用・テスト・解除する。
+.SH 書式
+.B #include <unistd.h>
+.sp
+.BI "int lockf(int " fd ", int " cmd ", off_t " len );
+.sp
+.in -4n
+glibc 向けの機能検査マクロの要件
+.RB ( feature_test_macros (7)
+参照):
+.in
+.sp
+.BR lockf ():
+_BSD_SOURCE || _SVID_SOURCE || _XOPEN_SOURCE\ >=\ 500
+.SH 説明
+開いているファイルのセクションに対して、
+POSIX ロックの適用・テスト・解除をする。
+ファイルは
+.I fd
+で指定される。
+これは書き込みのためにオープンしたファイルディスクリプタである。
+アクションは
+.I cmd
+で指定される。
+.I pos
+を現在のファイル位置とすると、
+.I len
+が正の場合、セクションはバイト位置
+.IR pos .. pos + len \-1
+である。
+.I len
+が負の場合、セクションはバイト位置
+.IR pos - len .. pos \-1
+である。
+.I len
+が 0 の場合、セクションは現在のファイル位置から無限大までとなる
+(つまり現在の、あるいは変更された場合は将来の、ファイル終端位置まで)。
+どの場合においても、セクションは以前のファイル終端よりも拡大されうる。
+.LP
+Linux では、この関数は単に
+.BR fcntl (2)
+へのインターフェースである。
+(一般には、
+.BR lockf ()
+と
+.BR fcntl (2)
+の関係は指定されていない。)
+.LP
+有効なオプションを以下に挙げる。
+.TP
+.B F_LOCK
+ファイルの指定されたセクションに排他ロックを設定する。
+そのセクション (の一部) が既にロックされていた場合、
+前のロックが解除されるまで関数の呼び出しがブロックされる。
+このセクションが前にロックされているセクションと重なった場合、
+2 つのセクションは結合される。
+ロックを保持しているプロセスが、
+そのファイルのファイルディスクリプタをクローズすると、
+ファイルロックは解放される。
+子プロセスはロックを継承しない。
+.TP
+.B F_TLOCK
+.B F_LOCK
+と同様であるが、ファイルが既にロックされている場合、
+関数の呼び出しはブロックを行わずにエラーを返す。
+.TP
+.B F_ULOCK
+ファイルの指定されたセクションのロックを解除する。
+これによりロックされたセクションが 2 つに分割されるかもしれない。
+.TP
+.B F_TEST
+次のようにロックのテストをする。
+指定されたセクションがロックされていないか、
+このプロセスによりロックされている場合、0 を返す。
+他のプロセスがロックを保持している場合、\-1 を返し、
+.I errno
+を
+.B EAGAIN
+(いくつかの他のシステムでは
+.BR EACCES )
+に設定する。
+.SH 返り値
+成功した場合、0 が返される。
+エラーの場合、\-1 が返され、
+.I errno
+がエラーに対応した値に設定される。
+.SH エラー
+.TP
+.BR EACCES " もしくは " EAGAIN
+ファイルがロックされて、
+.B F_TLOCK
+または
+.B F_TEST
+フラグが選択されている。
+または、ファイルが他のプロセスによりメモリーマップされているために、
+操作が禁止されている。
+.TP
+.B EBADF
+.I fd
+が開いているファイルのディスクリプタではない。
+.TP
+.B EDEADLK
+コマンドが
+.B T_LOCK
+であり、このロック操作がデッドロックを引き起こしている。
+.TP
+.B EINVAL
+.I fd
+に無効な操作が指定された。
+.TP
+.B ENOLCK
+非常に多くのセグメントロックが開かれ、ロックテーブルが溢れた。
+.SH 準拠
+SVr4, POSIX.1-2001.
+.SH 関連項目
+.BR fcntl (2),
+.BR flock (2)
+.br
+カーネルソースの
+.I Documentation
+ディレクトリにある
+.I locks.txt
+と
+.I mandatory-locking.txt
+(カーネル 2.6.23 以前では
+.IR mandatory.txt )。

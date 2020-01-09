@@ -1,0 +1,127 @@
+.\" Copyright (C) 2001 Andries Brouwer (aeb@cwi.nl)
+.\"
+.\" Permission is granted to make and distribute verbatim copies of this
+.\" manual provided the copyright notice and this permission notice are
+.\" preserved on all copies.
+.\"
+.\" Permission is granted to copy and distribute modified versions of this
+.\" manual under the conditions for verbatim copying, provided that the
+.\" entire resulting derived work is distributed under the terms of a
+.\" permission notice identical to this one.
+.\"
+.\" Since the Linux kernel and libraries are constantly changing, this
+.\" manual page may be incorrect or out-of-date.  The author(s) assume no
+.\" responsibility for errors or omissions, or for damages resulting from
+.\" the use of the information contained herein.  The author(s) may not
+.\" have taken the same level of care in the production of this manual,
+.\" which is licensed free of charge, as they might when working
+.\" professionally.
+.\"
+.\" Formatted or processed versions of this manual, if unaccompanied by
+.\" the source, must acknowledge the copyright and authors of this work.
+.\"
+.\" [should really be seteuid.3]
+.\" Modified, 27 May 2004, Michael Kerrisk <mtk.manpages@gmail.com>
+.\"     Added notes on capability requirements
+.\"
+.\" Japanese Version Copyright (c) 2001, 2005 Yuichi SATO
+.\"         all rights reserved.
+.\" Translated Mon Jun  4 09:08:41 JST 2001
+.\"         by Yuichi SATO <ysato@h4.dion.ne.jp>
+.\" Updated & Modified Tue Jan  4 05:51:25 JST 2005
+.\"         by Yuichi SATO <ysato444@yahoo.co.jp>
+.\"
+.\"WORD:	effective user ID	実効ユーザー ID
+.\"WORD:	real user ID		実ユーザー ID
+.\"WORD:	saved user ID		保存ユーザー ID
+.\"WORD:
+.\"
+.TH SETEUID 2 2007-07-26 "Linux" "Linux Programmer's Manual"
+.SH 名前
+seteuid, setegid \- 実効ユーザー ID や 実効グループ ID を設定する
+.SH 書式
+.B #include <sys/types.h>
+.br
+.B #include <unistd.h>
+.sp
+.BI "int seteuid(uid_t " euid );
+.br
+.BI "int setegid(gid_t " egid );
+.sp
+.in -4n
+glibc 向けの機能検査マクロの要件
+.RB ( feature_test_macros (7)
+参照):
+.in
+.sp
+.ad l
+.BR seteuid (),
+.BR setegid ():
+_BSD_SOURCE || _POSIX_C_SOURCE\ >=\ 200112L || _XOPEN_SOURCE\ >=\ 600
+.ad b
+.SH 説明
+.BR seteuid ()
+は呼び出し元のプロセスの実効ユーザー ID を設定する。
+非特権ユーザーのプロセスが実効ユーザー ID に設定できるのは、
+実ユーザー ID・実効ユーザー ID・保存 set-user-ID のいずれかだけである。
+
+.BR setegid ()
+は「ユーザー」ではなく「グループ」に対して全く同じことを行う。
+.\" When
+.\" .I euid
+.\" equals \-1, nothing is changed.
+.\" (This is an artifact of the implementation in glibc of seteuid()
+.\" using setresuid(2).)
+.SH 返り値
+成功した場合は 0 が返される。
+エラーの場合は \-1 が返され、
+.I errno
+が適切に設定される。
+
+.SH エラー
+.\" .TP
+.\" .B EINVAL
+.TP
+.B EPERM
+呼び出し元のプロセスに特権がなく
+(Linux では
+.BR seteuid ()
+の場合に
+.B CAP_SETUID
+ケーパビリティ (capability) がなく、
+.BR setegid ()
+の場合に
+.B CAP_SETGID
+ケーパビリティがない)、
+.I euid
+(または
+.IR egid )
+が実ユーザー (グループ) ID、または実効ユーザー (グループ) ID、
+または保存 set-user-ID (保存 set-group-ID) ではない。
+.SH 準拠
+4.3BSD, POSIX.1-2001.
+.SH 注意
+実効ユーザー (グループ) ID を保存 set-user-ID (保存 set-group-ID) に
+設定することが、Linux 1.1.37 (1.1.38) から可能になった。
+全てのシステムにおいて
+.B _POSIX_SAVED_IDS
+をチェックすべきである。
+.LP
+libc4, libc5, glibc 2.0 では
+.BI seteuid( euid )
+は
+.BI setreuid(\-1, " euid" )
+と同じなので、保存 set-user-ID を変更するかもしれない。
+glibc 2.1 では
+.BI setresuid(\-1, " euid" ", \-1)"
+と同じなので、保存 set-user-ID を変更しない。
+同様のことが
+.BR setegid ()
+にも言える。
+.SH 関連項目
+.BR geteuid (2),
+.BR setresuid (2),
+.BR setreuid (2),
+.BR setuid (2),
+.BR capabilities (7),
+.BR credentials (7)
