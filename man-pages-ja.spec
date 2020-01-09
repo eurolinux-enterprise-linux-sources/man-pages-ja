@@ -1,6 +1,6 @@
 Name: man-pages-ja
 Version: 20100115
-Release: 6%{?dist}
+Release: 8%{?dist}
 # Actual license for each Japanese manpages is the same to the original English manpages' license.
 License: Freely redistributable without restriction
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -13,6 +13,7 @@ Source2: tail.1
 Source3: echo.1
 Source4: upstart-man-pages-ja.tar.bz2
 Source5: tar.1
+Source6: getgrnam.3
 Patch0: man-pages-ja-fix-configure.perl.patch
 Patch9: man-pages-ja-20060815-204667-nfs.5.patch
 Patch11: man-pages-ja-20060815-178955-at.1.patch
@@ -41,6 +42,9 @@ Patch37: man-pages-ja-669646-pmap.1.patch
 Patch38: man-pages-ja-683019-getpriority.2.patch
 Patch39: man-pages-ja-949787-shmat.2.patch
 Patch40: man-pages-ja-957937-strtoul.3.patch
+Patch41: man-pages-ja-976137-sudoers.5.patch
+Patch42: man-pages-ja-993511-crontab.1.patch
+Patch43: man-pages-ja-1035088-nfs.5.patch
 
 Summary: Japanese man (manual) pages from the Japanese Manual Project
 Group: Documentation
@@ -77,6 +81,9 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch38 -p1 -b .38-getpriority
 %patch39 -p1 -b .39-shmat
 %patch40 -p1 -b .40-strtoul
+%patch41 -p1 -b .41-sudoers
+%patch42 -p1 -b .42-crontab
+%patch43 -p1 -b .43-nfs
 
 %build
 perl %{SOURCE1} '$DESTDIR' | make
@@ -145,6 +152,9 @@ done
 # For Bug#710704
 rm -rf $RPM_BUILD_ROOT%{_mandir}/ja/man1/tar.1*
 install -p -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/ja/man1/
+# For Bug#1059046
+rm -rf $RPM_BUILD_ROOT%{_mandir}/ja/man3/getgrnam.3*
+install -p -m644 %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/ja/man3/
 
 # accumulate translation_lists
 mkdir $RPM_BUILD_DIR/%{name}-%{version}/translation_lists
@@ -168,6 +178,14 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jun  2 2014 Akira TAGOH <tagoh@redhat.com> - 20100115-8
+- Fix nfs(5) (#1035088)
+
+* Fri May  2 2014 Akira TAGOH <tagoh@redhat.com>
+- Fix sudoers(5) (#976137)
+- Fix crontab(1) (#993511)
+- Fix getgrnam(3) (#1059046)
+
 * Mon Jun 24 2013 Akira TAGOH <tagoh@redhat.com> - 20100115-6
 - Fix a typo in shmat(2) (#949787)
 - Fix a typo in strtoul(3) (#957937)
