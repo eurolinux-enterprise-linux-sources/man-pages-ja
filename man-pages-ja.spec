@@ -1,6 +1,6 @@
 Name: man-pages-ja
 Version: 20100115
-Release: 3%{?dist}
+Release: 5%{?dist}
 # Actual license for each Japanese manpages is the same to the original English manpages' license.
 License: Freely redistributable without restriction
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -11,6 +11,8 @@ Source: http://linuxjm.sourceforge.jp/%{name}-%{version}.tar.gz
 Source1: rh-man-pages-ja.pl
 Source2: tail.1
 Source3: echo.1
+Source4: upstart-man-pages-ja.tar.bz2
+Source5: tar.1
 Patch0: man-pages-ja-fix-configure.perl.patch
 Patch9: man-pages-ja-20060815-204667-nfs.5.patch
 Patch11: man-pages-ja-20060815-178955-at.1.patch
@@ -25,7 +27,6 @@ Patch22: man-pages-ja-481750-bash.1.patch
 Patch23: man-pages-ja-451238-sysctl.8.patch
 Patch24: man-pages-ja-454048-bash.1.patch
 Patch25: man-pages-ja-454419-echo.1.patch
-Patch26: man-pages-ja-457361-wall.1.patch
 Patch27: man-pages-ja-20090615-vmstat.8.patch
 Patch28: man-pages-ja-493783-edquota.8.patch
 Patch29: man-pages-ja-486655-mkfs.8.patch
@@ -37,6 +38,7 @@ Patch34: man-pages-ja-fix-mdoc.patch
 Patch35: man-pages-ja-565362-iptables.8.patch
 Patch36: man-pages-ja-600321-snmpd.conf.5.patch
 Patch37: man-pages-ja-669646-pmap.1.patch
+Patch38: man-pages-ja-683019-getpriority.2.patch
 
 Summary: Japanese man (manual) pages from the Japanese Manual Project
 Group: Documentation
@@ -44,7 +46,7 @@ Group: Documentation
 Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{version} -a 4
 %patch0 -p1 -b .0-configure.perl
 %patch9 -p1 -b .9-nfs
 %patch11 -p1 -b .11-at
@@ -59,7 +61,6 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch23 -p1 -b .23-sysctl
 %patch24 -p1 -b .24-bash-hex
 %patch25 -p1 -b .25-echo
-%patch26 -p1 -b .26-wall
 %patch27 -p1 -b .27-vmstat
 %patch28 -p1 -b .28-edquota
 %patch29 -p1 -b .29-mkfs
@@ -71,6 +72,7 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch35 -p1 -b .35-iptables
 %patch36 -p1 -b .36-snmpd-conf
 %patch37 -p1 -b .37-pmap
+%patch38 -p1 -b .38-getpriority
 
 %build
 perl %{SOURCE1} '$DESTDIR' | make
@@ -118,6 +120,27 @@ install -p -m644 %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/ja/man1/
 # For Bug#618934
 rm -rf $RPM_BUILD_ROOT%{_mandir}/ja/man1/echo.1*
 install -p -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/ja/man1/
+# For Bug#579641
+(cd ja;
+for f in *.5; do
+	install -p -m644 $f $RPM_BUILD_ROOT%{_mandir}/ja/man5/
+done
+for f in *.7; do
+	install -p -m644 $f $RPM_BUILD_ROOT%{_mandir}/ja/man7/
+done
+for f in *.8; do
+	install -p -m644 $f $RPM_BUILD_ROOT%{_mandir}/ja/man8/
+done
+for i in halt poweroff; do
+	ln -s reboot.8 $RPM_BUILD_ROOT%{_mandir}/ja/man8/$i.8
+done
+for i in reload restart start status stop; do
+	ln -s initctl.8 $RPM_BUILD_ROOT%{_mandir}/ja/man8/$i.8
+done
+)
+# For Bug#710704
+rm -rf $RPM_BUILD_ROOT%{_mandir}/ja/man1/tar.1*
+install -p -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/ja/man1/
 
 # accumulate translation_lists
 mkdir $RPM_BUILD_DIR/%{name}-%{version}/translation_lists
@@ -141,6 +164,15 @@ rm -fr $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jul 13 2011 Akira TAGOH <tagoh@redhat.com> - 20100115-5
+- Add further missing manpages for upstart. (#579641)
+
+* Tue Jun 28 2011 Akira TAGOH <tagoh@redhat.com> - 20100115-4
+- Add manpages related to upstart. (#579641)
+- Fix a typo in getpriority(2) (#682122)
+- Revert a patch to correct wall(1) again (#699301)
+- Revise the outdated tar(1) (#710704)
+
 * Fri Jan 14 2011 Akira TAGOH <tagoh@redhat.com> - 20100115-3
 - Get rid of manpages related to SysVinit. (#579647)
 - Add deprecated notice for the usage of PORT in sink directives. (#600324)
