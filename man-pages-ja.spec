@@ -1,6 +1,6 @@
 Name: man-pages-ja
 Version: 20130615
-Release: 1%{?dist}
+Release: 2%{?dist}
 # Actual license for each Japanese manpages is the same to the original English manpages' license.
 License: Freely redistributable without restriction
 BuildArch: noarch
@@ -146,6 +146,9 @@ done
 
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 20130615-2
+- Mass rebuild 2013-12-27
+
 * Mon Jun 24 2013 Akira TAGOH <tagoh@redhat.com> - 20130615-1
 - Updates to 20130615.
 
