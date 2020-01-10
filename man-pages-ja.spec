@@ -1,6 +1,6 @@
 Name: man-pages-ja
 Version: 20130615
-Release: 2%{?dist}
+Release: 3%{?dist}
 # Actual license for each Japanese manpages is the same to the original English manpages' license.
 License: Freely redistributable without restriction
 BuildArch: noarch
@@ -35,6 +35,7 @@ Patch36: %{name}-600321-snmpd.conf.5.patch
 Patch37: %{name}-669646-pmap.1.patch
 Patch38: %{name}-674219-iptables.8.patch
 Patch39: %{name}-683019-getpriority.2.patch
+Patch40: %{name}-1543697-last.1.patch
 
 Summary: Japanese man (manual) pages from the Japanese Manual Project
 Group: Documentation
@@ -67,6 +68,7 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch37 -p1 -b .37-pmap
 %patch38 -p1 -b .38-iptables
 %patch39 -p1 -b .39-getpriority
+%patch40 -p1 -b .40-last
 
 %build
 sed -ie 's/::/:GNU coreutils:/g' manual/GNU_coreutils/translation_list
@@ -146,6 +148,9 @@ done
 
 
 %changelog
+* Thu Jun 21 2018 Akira TAGOH <tagoh@redhat.com> - 20130615-3
+- Add translations for missing options in last(1). (#1543697)
+
 * Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 20130615-2
 - Mass rebuild 2013-12-27
 
