@@ -1,8 +1,33 @@
 Name: man-pages-ja
 Version: 20130615
-Release: 3%{?dist}
-# Actual license for each Japanese manpages is the same to the original English manpages' license.
-License: Freely redistributable without restriction
+Release: 5%{?dist}
+# BSD - shadow, bsd-games, byacc, bzip2, dhcpcd, dump, file, hdparm, rssh, tcp_wrappers, tcsh
+# GFDL - GNU_*, cron, glibc-linuxthreads
+# GPL+/GPLv2+/BSD/MIT/Copyright only/IEEE - LDP_manpages, gnumaniak, ld.so
+# GPLv2+ - SysVinit, acl, apmd, at, autofs, ebtables, eject, e2fsprogs, iptables, logrotate, man-db, net-tools, pciutils, psmisc, rdate, rp-pppoe, rpm, smartmontools, uudeview
+# ISC - bind, dhcp, dhcp2, sudo
+# GPLv2 and LGPLv2 - cdparanoia
+# GPLv2+ and LGPLv2+ with exceptions and AML - cups
+# ??? - microcode_ctl, procps
+# Public Domain - expect
+# GPL+ and Public Domain - fetchmail
+# BSD and LGPLv2+ - flex
+# LGPLv2+ - mpg123
+# Artistic clarified - ncftp
+# MIT - ncurses
+# MIT and GPLv2 and GPLv2+ and BSD - nfs-utils
+# BSD and LGPLv2+ and GPLv2+ and Public Domain - ppp
+# GPL+ - procinfo, setserial
+# GPLv2+ or Artistic - procmail
+# BSD and GPLv2 and GPLv2+ - quota
+# GPLv3+ - rsync
+# Sendmail - sendmail
+# BSD with advertising - tcpdump
+# GPLv2 and GPLv2+ and LGPLv2+ and BSD with advertising and Public Domain - util-linux
+# GPLv2 with exceptions - vsftpd
+# xinetd - xinetd
+# GPLv2 - yp-tools, ypbind-mt, ypserv
+License: BSD and GFDL and GPL+ and GPLv2+ and MIT and Copyright only and IEEE and ISC and GPLv2 and LGPLv2 and LGPLv2+ with exceptions and AML and Public Domain and LGPLv2+ and Artistic clarified and (GPLv2+ or Artistic) and GPLv3+ and Sendmail and BSD with advertising and GPLv2 with exceptions and xinetd
 BuildArch: noarch
 BuildRequires: perl(Env)
 URL: http://linuxjm.sourceforge.jp/
@@ -36,6 +61,7 @@ Patch37: %{name}-669646-pmap.1.patch
 Patch38: %{name}-674219-iptables.8.patch
 Patch39: %{name}-683019-getpriority.2.patch
 Patch40: %{name}-1543697-last.1.patch
+Patch41: %{name}-1661363-telnet.1.patch
 
 Summary: Japanese man (manual) pages from the Japanese Manual Project
 Group: Documentation
@@ -69,6 +95,7 @@ Japanese Manual pages, translated by JM-Project (Japanese Manual Project).
 %patch38 -p1 -b .38-iptables
 %patch39 -p1 -b .39-getpriority
 %patch40 -p1 -b .40-last
+%patch41 -p1 -b .41-telnet
 
 %build
 sed -ie 's/::/:GNU coreutils:/g' manual/GNU_coreutils/translation_list
@@ -148,6 +175,10 @@ done
 
 
 %changelog
+* Wed Jan 16 2019 Akira TAGOH <tagoh@redhat.com> - 20130615-5
+- Add missing description for some options. (#1661363)
+- Update License tag.
+
 * Thu Jun 21 2018 Akira TAGOH <tagoh@redhat.com> - 20130615-3
 - Add translations for missing options in last(1). (#1543697)
 
