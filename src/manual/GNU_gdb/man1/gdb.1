@@ -1,0 +1,242 @@
+.\" Copyright (C) 1991, 1999, 2010-2012 Free Software Foundation, Inc.
+.\" See section COPYING for conditions for redistribution
+.\" $Id: gdb.1,v 1.4 1999/01/05 00:50:50 jsm Exp $
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH gdb 1 22may2002 "GNU Tools" "GNU Tools"
+.SH 名前
+gdb \- GNU デバッガ
+.SH 書式
+.na
+.TP 
+\fBgdb\fP
+[\|\fB\-help\fP\|] [\|\fB\-nx\fP\|] [\|\fB\-q\fP\|] [\|\fB\-batch\fP\|] [\|\fB\-cd=\fP\fIdir\fP\|]
+[\|\fB\-f\fP\|] [\|\fB\-b\ \fP\fIbps\fP\|] [\|\fB\-tty=\fP\fIdev\fP\|] [\|\fB\-s
+\fP\fIsymfile\fP\&\|] [\|\fB\-e \fP\fIprog\fP\&\|] [\|\fB\-se \fP\fIprog\fP\&\|] [\|\fB\-c
+\fP\fIcore\fP\&\|] [\|\fB\-x \fP\fIcmds\fP\&\|] [\|\fB\-d \fP\fIdir\fP\&\|]
+[\|\fIprog\fP[\|\fIcore\fP\||\|\fIprocID\fP\&\|]\&\|]
+.ad b
+.SH 説明
+GDB
+をはじめとするデバッガは、プログラムが実行中もしくはクラッシュした時にそのプログラムの「内部」で何が行なわれているか/行われていたかを調べるのに使用されます。
+
+GDB は、4 つの機能 (加えてこれらをサポートする機能) によって 実行中にバグを見つけることを手助けします。
+
+.TP 
+\ \ \ \(bu
+プログラムの動作を詳細に指定してプログラムを実行させる。
+
+.TP 
+\ \ \ \(bu
+指定した条件でプログラムを停止させる。
+
+.TP 
+\ \ \ \(bu
+プログラムが止まった時に、何が起こったか調べる。
+
+.TP 
+\ \ \ \(bu
+バグによる副作用を修正し、別のバグを調べるためプログラムの状態を変更する。
+.PP
+
+GDB では C, C++, Modula\-2 などで書かれたプログラムのデバッグが行なえます。 GNU Fortran コンパイラが完成すれば
+Fortran もサポートされます。
+
+GDB はシェルコマンド\fBgdb\fP\&で起動されます。いったん起動すると、GDB
+コマンド\fBquit\fP\&を実行して終了するまで、端末からコマンドを読み続けます。 \fBgdb\fP\&のオンラインヘルプは(\fBgdb\fPの中で)
+\fBhelp\fP\&コマンドを実行すれば表示されます。
+
+\fBgdb\fP\& は引数やオプション無しで起動できますが、 たいてい、1 つか 2 つの引数を付けて起動します。実行プログラムを
+引数にする場合は以下のようになります:
+.sp
+.br
+gdb\ program
+.br
+.sp
+
+また実行プログラムと core ファイルの両方を指定することもできます:
+.sp
+.br
+gdb\ program\ core
+.br
+.sp
+
+もし実行中のプロセスのデバッグを行ないたい場合には、 第 2 引数として core の代わりにプロセス ID を指定します:
+.sp
+.br
+gdb\ program\ 1234
+.br
+.sp
+
+これは GDB をプロセス ID \fB1234\fP\&
+のプロセスに接続します(このとき`\|\fB1234\fP\&\|'という名前のファイルが存在してはいけません。 GDB はまず core
+ファイルを最初にチェックしにいくからです)。
+
+よく利用される GDB コマンドには以下のようなものがあります:
+.TP 
+\fBbreak \fP[\|\fIfile\fP\fB:\fP\|]\fIfunction\fP
+\& プレークポイントを \& (\fIfile\fP\&内の)  \fIfunction\fPに設定します。
+.TP 
+\fBrun \fP[\|\fIarglist\fP\|]
+プログラムの実行を開始します(もしあれば \fIarglist\fP\&を引数として)。
+.TP 
+\fBbt\fP
+バックトレース: プログラムのスタックを表示します。
+.TP 
+\fBprint\fP\fI expr\fP\&
+式の値を表示します。
+.TP 
+\fBc\fP
+プログラムの実行を再開します。(たとえばブレークポイントで実行を中断した後で)
+.TP 
+\fBnext\fP
+次のプログラム行を実行します 。 その行内の全ての関数は 1 ステップで実行されます。
+.TP 
+\fBedit \fP[\|\fIfile\fP\fB:\fP\|]\fIfunction\fP
+現在中断している場所のプログラムの行をエディタで開きます。
+.TP 
+\fBlist \fP[\|\fIfile\fP\fB:\fP\|]\fIfunction\fP
+現在中断している場所の近辺のプログラムのソースを表示します。
+.TP 
+\fBstep\fP
+次のプログラム行を実行します。 もしその行に関数が含まれていれば、その関数内をステップ実行していきます。
+.TP 
+\fBhelp \fP[\|\fIname\fP\|]
+GDB コマンド \fIname\fP\&についての情報や、 GDB を使う上での一般的な情報を表示します。
+.TP 
+\fBquit\fP
+GDB を終了します。
+.PP
+GDB の詳細については\fIUsing GDB: A Guide to the GNU Source\-Level Debugger\fP\&, by
+Richard M. Stallman and Roland H. Pesch. を参照して下さい。 同じテキストは、 \fBinfo\fP\&
+プログラム内の \fBgdb\fP\& エントリからオンラインで参照できます。
+.SH オプション
+オプション以外の引数は、実行ファイルと core ファイル (もしくはプロセス ID)
+を表します。つまりオプションフラグでもオプションフラグの引数でもない最初の 引数は `\|\fB\-se\fP\&\|'
+オプションで指定するファイルと同じになり、(もしあれば)次の 2 番目の引数は `\|\fB\-c\fP\&\|'
+オプションで指定するファイルと同じになります。 オプションの多くは、長い表記法と短い表記法の両方で指定することができま
+すが、ここではその両方を示します。 長い表記法は、どのオプションであるのかが明確であれば、短く切り詰めても 構いません。 (好みにより
+`\|\fB\-\fP\&\|' の代わりに `\|\fB+\fP\&\|' が使用できますが、ここではよく用いられる表記で記します。)
+
+全てのオプションとコマンドライン引数は指定した順番に処理されます。 `\|\fB\-x\fP\&\|' オプションが使用されると、この順番は変わってきます。
+
+.TP 
+\fB\-help\fP
+.TP 
+\fB\-h\fP
+短い説明つきで、全てのオプションを表示します。
+
+.TP 
+\fB\-symbols=\fP\fIfile\fP
+.TP 
+\fB\-s \fP\fIfile\fP\&
+シンボルテーブルをファイル \fIfile\fP\&から読みます。
+
+.TP 
+\fB\-write\fP
+実行ファイルやコアファイルへの書き込みを有効にします。
+
+.TP 
+\fB\-exec=\fP\fIfile\fP
+.TP 
+\fB\-e \fP\fIfile\fP\&
+ファイル \fIfile\fP\& を実行可能ファイルとして利用します。 core dump と連係して pure data を調べるのにも用いられます。
+
+.TP 
+\fB\-se=\fP\fIfile\fP
+\& ファイル \fIfile\fP\& からシンボルテーブルを読み、同時にそれを実行可能ファイルとして利用します。
+
+.TP 
+\fB\-core=\fP\fIfile\fP
+.TP 
+\fB\-c \fP\fIfile\fP\&
+ファイル \fIfile\fP\& を core dump として利用します。
+
+.TP 
+\fB\-command=\fP\fIfile\fP
+.TP 
+\fB\-x \fP\fIfile\fP\&
+ファイル \fIfile\fP\&から GDB のコマンドを読み込み、実行します。
+
+.TP 
+\fB\-directory=\fP\fIdirectory\fP
+.TP 
+\fB\-d \fP\fIdirectory\fP\&
+ソースファイルを探すサーチパスに \fIdirectory\fP\& を追加します。
+.PP
+
+.TP 
+\fB\-nx\fP
+.TP 
+\fB\-n\fP
+初期化ファイル `\|\fB.gdbinit\fP\&\|' からコマンドを読み込みません。 通常は、 全てのコマンドオプションと引数が処理された後で、
+初期化ファイル内のコマンドが実行されます。
+
+
+.TP 
+\fB\-quiet\fP
+.TP 
+\fB\-q\fP
+起動時のメッセージおよび copyright を表示しません。 これらのメッセージはバッチモードでも抑制されます。
+
+.TP 
+\fB\-batch\fP
+バッチモードで動作します。`\|\fB\-x\fP\&\|' で指定したファイル(および、\-nx か \-n で抑制されていなければ
+`\|\fB.gdbinit\fP\&\|') 内の全てのコマンドを 処理した後、戻り値として \fB0\fP\& を返して終了します。 コマンドファイル内の
+GDB コマンドの実行中にエラーが生じた場合は、 0 以外の値で終了します。
+
+バッチモードは GDB をフィルタとして実行する場合、 たとえばプログラムをダウンロードして別のコンピュータ上で実行したりする場合 に便利です。
+以下のメッセージ
+.sp
+.br
+Program\ exited\ normally. (プログラムは正常に終了しました。)
+.br
+.sp
+
+は通常、GDB の制御端末上で実行されるプログラムが終了するたびに 出力されるものですが、 バッチモードではこのようなメッセージは出力されません。
+
+.TP 
+\fB\-cd=\fP\fIdirectory\fP\&
+カレントディレクトリの代わりに \fIdirectory\fP\& を GDB の作業用ディレクトリとして実行します。
+
+.TP 
+\fB\-fullname\fP
+.TP 
+\fB\-f\fP
+Emacs が GDB をサブプロセスとして実行する際にこのオプションを付加します。 このとき GDB
+は、スタックフレームが表示される度(プログラムが中断する度を 含みます)に、完全なファイル名と行番号を標準的な認識しやすい形式で表示します。
+この表示書式は 2 つの `\|\fB\032\fP\&\|' 文字、ファイル名、コロンで区切られた行番号と文字位置、改行の順になっ ています。これは
+Emacs→GDB インタフェースプログラムにおいて、 フレームに対応するソースコードを表示するために 2 つの `\|\fB\032\fP\&\|'
+文字を使うことになっているからです。
+
+.TP 
+\fB\-b \fP\fIbps\fP\&
+リモートデバッグ用に GDB が利用するシリアルインタフェースの転送速度を (ボーレートまたはビット/秒で)セットします。
+
+.TP 
+\fB\-tty=\fP\fIdevice\fP\&
+プログラムの標準入出力に \fIdevice\fP\& を利用します。
+.PP
+
+.SH 関連項目
+\fBinfo\fP 内の `\|\fBgdb\fP\|' エントリー\&; \fIUsing GDB: A Guide to the GNU
+Source\-Level Debugger\fP, Richard M. Stallman and Roland H. Pesch, July 1991.
+.SH 著作権
+Copyright (c) 1991 Free Software Foundation, Inc.
+.PP
+Permission is granted to make and distribute verbatim copies of this manual
+provided the copyright notice and this permission notice are preserved on
+all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission notice
+identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be included in translations approved
+by the Free Software Foundation instead of in the original English.

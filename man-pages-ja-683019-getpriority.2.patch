@@ -1,0 +1,12 @@
+diff -pruN man-pages-ja-20120515.orig/manual/LDP_man-pages/man2/getpriority.2 man-pages-ja-20120515/manual/LDP_man-pages/man2/getpriority.2
+--- man-pages-ja-20120515.orig/manual/LDP_man-pages/man2/getpriority.2	2012-05-15 01:03:16.000000000 +0900
++++ man-pages-ja-20120515/manual/LDP_man-pages/man2/getpriority.2	2012-05-18 18:38:20.000000000 +0900
+@@ -118,7 +118,7 @@ の範囲を使って 表現されてお
+ \fBgetpriority\fP()  で使用されている。 glibc のこれらのシステムコールのラッパー関数において、nice 値の ユーザ領域
+ (user\-land) とカーネル表現の間の変換が行われる。 変換式は以下の通り: \fIunice\ =\ 20\ \-\ knice\fP
+ .LP
+-いくつかのシステムでは、nice 値の範囲は \20 〜 20 である。
++いくつかのシステムでは、nice 値の範囲は \-20 〜 20 である。
+ .LP
+ 現在では \fI<sys/time.h>\fP をインクルードする必要はないが、インクルードすれば移植性を高めることができる (実際には
+ \fI<sys/resource.h>\fP で \fIrusage\fP 構造体が定義されているが、そのフィールドで使用されている

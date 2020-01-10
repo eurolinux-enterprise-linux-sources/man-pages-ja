@@ -1,0 +1,16 @@
+diff -pruN man-pages-ja-20120515.orig/manual/LDP_man-pages/man2/connect.2 man-pages-ja-20120515/manual/LDP_man-pages/man2/connect.2
+--- man-pages-ja-20120515.orig/manual/LDP_man-pages/man2/connect.2	2012-05-15 01:03:15.000000000 +0900
++++ man-pages-ja-20120515/manual/LDP_man-pages/man2/connect.2	2012-05-18 18:09:32.000000000 +0900
+@@ -111,10 +111,8 @@ ローカルアドレスが既に使用�
+ \fBEAFNOSUPPORT\fP
+ 渡されたアドレスの \fIsa_family\fP フィールドが正しいアドレス・ファミリーではない。
+ .TP 
+-\fBEAGAIN\fP
+-使用可能なローカルのポートがないか、 ルーティングキャッシュに十分なエントリがない。 \fBAF_INET\fP
+-の場合に、ローカルポートの数を増やす方法については、 \fBip\fP(7)  の
+-\fI/proc/sys/net/ipv4/ip_local_port_range\fP の説明を参照のこと。
++.B EADDRNOTAVAIL
++存在しないソケットが要求された。または要求されたソースアドレスがローカルでない。
+ .TP 
+ \fBEALREADY\fP
+ ソケットが非停止 (nonblocking) に設定されており、 前の接続が完了していない。

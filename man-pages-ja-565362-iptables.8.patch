@@ -1,0 +1,154 @@
+diff -pruN man-pages-ja-20120515.orig/manual/iptables/man8/iptables.8 man-pages-ja-20120515/manual/iptables/man8/iptables.8
+--- man-pages-ja-20120515.orig/manual/iptables/man8/iptables.8	2012-05-15 01:03:25.000000000 +0900
++++ man-pages-ja-20120515/manual/iptables/man8/iptables.8	2012-05-18 18:33:30.000000000 +0900
+@@ -182,19 +182,19 @@ ヘルプ。 (今のところはとて�
+ .SS パラメータ
+ 以下のパラメータは (add, delete, insert, replace, append コマンドで用いられて) ルールの仕様を決める。
+ .TP 
+-\fB\-p, \-\-protocol \fP[!] \fIprotocol\fP
++\fB[!] \-p, \-\-protocol \fP\fIprotocol\fP
+ ルールで使われるプロトコル、またはチェックされるパケットのプロトコル。 指定できるプロトコルは、 \fItcp\fP, \fIudp\fP, \fIicmp\fP,
+ \fIall\fP のいずれか 1 つか、数値である。 数値には、これらのプロトコルのどれかないし別のプロトコルを表す 数値を指定することができる。
+ /etc/protocols にあるプロトコル名も指定できる。 プロトコルの前に "!" を置くと、そのプロトコルを除外するという意味になる。 数値 0
+ は \fIall\fP と等しい。 プロトコル \fIall\fP は全てのプロトコルとマッチし、 このオプションが省略された際のデフォルトである。
+ .TP 
+-\fB\-s, \-\-source \fP[!] \fIaddress\fP[/\fImask\fP]
++\fB[!] \-s, \-\-source \fP\fIaddress\fP[/\fImask\fP]
+ 送信元の指定。 \fIaddress\fP はホスト名 (DNS のようなリモートへの問い合わせで解決する名前を指定するのは非常に良くない)  ・ネットワーク
+ IP アドレス (/mask を指定する)・ 通常の IP アドレス、のいずれかである。 \fImask\fP はネットワークマスクか、
+ ネットワークマスクの左側にある 1 の数を指定する数値である。 つまり、 \fI24\fP という mask は \fI255.255.255.0\fP に等しい。
+ アドレス指定の前に "!" を置くと、そのアドレスを除外するという意味になる。 フラグ \fB\-\-src\fP は、このオプションの別名である。
+ .TP 
+-\fB\-d, \-\-destination \fP[!] \fIaddress\fP[/\fImask\fP]
++\fB[!] \-d, \-\-destination \fP \fIaddress\fP[/\fImask\fP]
+ 送信先の指定。 書式の詳しい説明については、 \fB\-s\fP (送信元) フラグの説明を参照すること。 フラグ \fB\-\-dst\fP
+ は、このオプションの別名である。
+ .TP 
+@@ -207,7 +207,7 @@ 参照) でもよい。 このオプシ�
+ マッチしてもパケットの行方に何も影響しないが、 ルールのカウンタは 1 つ
+ 加算される。
+ .TP 
+-\fB\-i, \-\-in\-interface \fP[!] \fIname\fP
++\fB[!] \-i, \-\-in\-interface \fP\fIname\fP
+ パケットを受信することになるインターフェース名 (\fBINPUT\fP, \fBFORWARD\fP,
+ \fBPREROUTING\fP チェインに入るパケットのみ)。インターフェース名の前に
+ "!" を置くと、 そのインターフェースを除外するという意味になる。
+@@ -215,7 +215,7 @@ インターフェース名が "+" で�
+ インターフェース名にマッチする。このオプションが省略された場合、
+ 任意のインターフェース名にマッチする。
+ .TP 
+-\fB\-o, \-\-out\-interface \fP[!] \fIname\fP
++\fB[!] \-o, \-\-out\-interface \fP\fIname\fP
+ パケットを送信することになるインターフェース名 (\fBFORWARD\fP, \fBOUTPUT\fP, \fBPOSTROUTING\fP
+ チェインに入るパケットのみ)。 インターフェース名の前に "!" を置くと、 そのインターフェースを除外するという意味になる。 インターフェース名が
+ "+" で終っている場合、 その名前で始まる任意のインターフェース名にマッチする。 このオプションが省略された場合、
+@@ -266,7 +266,7 @@ 前におくことによってマッチ�
+ .SS ah
+ このモジュールは IPSec パケットの AH ヘッダーの SPI 値にマッチする。
+ .TP 
+-\fB\-\-ahspi \fP[!] \fIspi\fP[:\fIspi\fP]
++\fB[!] \-\-ahspi \fP\fIspi\fP[:\fIspi\fP]
+ .SS conntrack
+ このモジュールは、接続追跡 (connection tracking) と組み合わせて用いると、 "state" マッチよりもさらに多くの、
+ パケットについての接続追跡状態を知ることができる (この機能をサポートしたカーネルのもとで iptables がコンパイルされた場合
+@@ -284,16 +284,16 @@ 仮想的な状態であり、書き換�
+ \fB\-\-ctproto \fP\fIproto\fP
+ (名前または数値で) 指定されたプロトコルにマッチする。
+ .TP 
+-\fB\-\-ctorigsrc \fP\fI[!] address[/mask]\fP
++\fB[!] \-\-ctorigsrc \fP\fIaddress[/mask]\fP
+ 書き換え前の送信元アドレスにマッチする。
+ .TP 
+-\fB\-\-ctorigdst \fP\fI[!] address[/mask]\fP
++\fB[!] \-\-ctorigdst \fP\fIaddress[/mask]\fP
+ 書き換え前の宛先アドレスにマッチする。
+ .TP 
+-\fB\-\-ctreplsrc \fP\fI[!] address[/mask]\fP
++\fB[!] \-\-ctreplsrc \fP\fIaddress[/mask]\fP
+ 応答の送信元アドレスにマッチする。
+ .TP 
+-\fB\-\-ctrepldst \fP\fI[!] address\fP\fB[/\fP\fImask\fP\fB]\fP
++\fB[!] \-\-ctrepldst \fP\fIaddress\fP\fB[/\fP\fImask\fP\fB]\fP
+ 応答の宛先アドレスにマッチする。
+ .TP 
+ \fB\-\-ctstatus \fP\fI[NONE|EXPECTED|SEEN_REPLY|ASSURED][,...]\fP
+@@ -314,7 +314,7 @@ これらは、対応する数値で指�
+ .SS esp
+ このモジュールは IPSec パケットの ESP ヘッダーの SPI 値にマッチする。
+ .TP 
+-\fB\-\-espspi \fP[!] \fIspi\fP[:\fIspi\fP]
++\fB[!] \-\-espspi \fP\fIspi\fP[:\fIspi\fP]
+ .SS helper
+ このモジュールは、指定された接続追跡ヘルパーモジュールに 関連するパケットにマッチする。
+ .TP 
+@@ -330,7 +330,7 @@ 他の接続追跡ヘルパーでも同�
+ .SS icmp
+ この拡張は `\-\-protocol icmp' が指定された場合にロードされ、 以下のオプションが提供される:
+ .TP 
+-\fB\-\-icmp\-type \fP[!] \fItypename\fP
++\fB[!] \-\-icmp\-type \fP\fItypename\fP
+ ICMP タイプを指定できる。タイプ指定には、 数値の ICMP タイプ、または以下のコマンド で表示される ICMP タイプ名を指定できる。
+ .nf
+  iptables \-p icmp \-h
+@@ -355,7 +355,7 @@ 達しなければ、 その度ごとに
+ デフォルトは 5 である。
+ .SS mac
+ .TP 
+-\fB\-\-mac\-source \fP[!] \fIaddress\fP
++\fB[!] \-\-mac\-source \fP\fIaddress\fP
+ 送信元 MAC アドレスにマッチする。 \fIaddress\fP は XX:XX:XX:XX:XX:XX と
+ いう形式でなければならない。イーサーネットデバイスから入ってくるパケッ
+ トで、 \fBPREROUTING\fP, \fBFORWARD\fP, \fBINPUT\fP チェインに入るパケットにしか
+@@ -440,7 +440,7 @@ データ転送や ICMP エラーのよ�
+ .SS tcp
+ これらの拡張は `\-\-protocol tcp' が指定され場合にロードされ、 以下のオプションが提供される:
+ .TP 
+-\fB\-\-source\-port \fP[!] \fIport\fP[:\fIport\fP]
++\fB[!] \-\-source\-port \fP\fIport\fP[:\fIport\fP]
+ 送信元ポートまたはポート範囲の指定。 サービス名またはポート番号を指定で
+ きる。 \fIport\fP:\fIport\fP という形式で、2 つの番号を含む範囲を指定すること
+ もできる。 最初のポートを省略した場合、"0" を仮定する。 最後のポートを
+@@ -448,10 +448,10 @@ 省略した場合、"65535" を仮定�
+ 場合、2 つは入れ換えられる。 フラグ \fB\-\-sport\fP は、このオプションの便利
+ な別名である。
+ .TP 
+-\fB\-\-destination\-port \fP[!] \fIport\fP[:\fIport\fP]
++\fB[!] \-\-destination\-port \fP\fIport\fP[:\fIport\fP]
+ 送信先ポートまたはポート範囲の指定。 フラグ \fB\-\-dport\fP は、このオプションの便利な別名である。
+ .TP 
+-\fB\-\-tcp\-flags \fP[!] \fImask\fP \fIcomp\fP
++\fB[!] \-\-tcp\-flags \fP\fImask\fP \fIcomp\fP
+ TCP フラグが指定されたものと等しい場合にマッチする。 第 1 引き数は評価
+ 対象とするフラグで、コンマ区切りのリストである。 第 2 引き数は必ず設定
+ しなければならないフラグで、コンマ区切りのリストである。 指定できるフラ
+@@ -470,7 +470,7 @@ は \fB\-\-tcp\-flags SYN,RST,ACK SYN\fP
+ を置くと、 SYN ビットがクリアされ ACK と RST ビットが設定されている
+ TCP パケットにのみマッチする。
+ .TP 
+-\fB\-\-tcp\-option \fP[!] \fInumber\fP
++\fB[!] \-\-tcp\-option \fP\fInumber\fP
+ TCP オプションが設定されている場合にマッチする。
+ .TP 
+ \fB\-\-mss \fP\fIvalue\fP[:\fIvalue\fP]
+@@ -493,10 +493,10 @@ 指定された TTL 値にマッチす�
+ .SS udp
+ これらの拡張は `\-\-protocol udp' が指定された場合にロードされ、 以下のオプションが提供される:
+ .TP 
+-\fB\-\-source\-port \fP[!] \fIport\fP[:\fIport\fP]
++\fB[!] \-\-source\-port \fP\fIport\fP[:\fIport\fP]
+ 送信元ポートまたはポート範囲の指定。 詳細は TCP 拡張の \fB\-\-source\-port\fP オプションの説明を参照すること。
+ .TP 
+-\fB\-\-destination\-port \fP[!] \fIport\fP[:\fIport\fP]
++\fB[!] \-\-destination\-port \fP\fIport\fP[:\fIport\fP]
+ 送信先ポートまたはポート範囲の指定。 詳細は TCP 拡張の \fB\-\-destination\-port\fP オプションの説明を参照すること。
+ .SS unclean
+ このモジュールにはオプションがないが、 おかしく正常でないように見えるパケットにマッチする。 これは実験的なものとして扱われている。
+@@ -557,7 +557,7 @@ IP パケットヘッダーのオプシ�
+ パケットに関連づけられた netfilter の mark 値を設定する。 \fBmangle\fP テーブルのみで有効である。 例えば、iproute2
+ と組み合わせて使うことができる。
+ .TP 
+-\fB\-\-set\-mark \fP\fImark\fP
++\fB\-\-set\-mark \fP\fIvalue\fP[\fB/\fP\fImask\fP]
+ .SS MASQUERADE
+ このターゲットは \fBnat\fP テーブルの \fBPOSTROUTING\fP チェインのみで有効である。 動的割り当て IP (ダイヤルアップ)
+ 接続の場合にのみ使うべきである。 固定 IP アドレスならば、SNAT ターゲットを使うべきである。

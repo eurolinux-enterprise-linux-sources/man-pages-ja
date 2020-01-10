@@ -1,0 +1,14 @@
+diff -pruN man-pages-ja-20130615.orig/manual/LDP_man-pages/man7/ip.7 man-pages-ja-20130615/manual/LDP_man-pages/man7/ip.7
+--- man-pages-ja-20130615.orig/manual/LDP_man-pages/man7/ip.7	2013-06-15 01:03:18.000000000 +0900
++++ man-pages-ja-20130615/manual/LDP_man-pages/man7/ip.7	2013-06-24 12:41:42.000000000 +0900
+@@ -330,8 +330,8 @@ been explicitly joined (for example via 
+ this particular socket.
+ .TP 
+ \fBIP_MULTICAST_IF\fP (Linux 1.2 以降)
+-ローカルデバイスをマルチキャストソケットとして設定する。引き数は \fBIP_ADD_MEMBERSHIP\fP と同様に \fIip_mreqn\fP または
+-\fIip_mreq\fP 構造体である。
++ローカルデバイスをマルチキャストソケットとして設定する。引き数は \fIip_mreqn\fP または
++\fIin_addr\fP 構造体である。
+ .IP
+ 不正なソケットオプションが渡されると、 \fBENOPROTOOPT\fP が返される。
+ .TP 

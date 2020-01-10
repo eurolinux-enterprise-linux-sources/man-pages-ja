@@ -1,0 +1,19 @@
+diff -pruN man-pages-ja-20120715.orig/script/pkgs.list man-pages-ja-20120715/script/pkgs.list
+--- man-pages-ja-20120715.orig/script/pkgs.list	2012-06-12 02:45:41.000000000 +0900
++++ man-pages-ja-20120715/script/pkgs.list	2012-07-25 20:18:11.000000000 +0900
+@@ -8,7 +8,6 @@
+ #
+ shadow		Y
+ GNU_coreutils	Y
+-gnumaniak	Y
+ GNU_bash	Y
+ GNU_bc		Y
+ GNU_binutils	Y
+@@ -37,6 +36,7 @@ GNU_texinfo	Y
+ GNU_textutils	N
+ GNU_uucp	Y
+ LDP_man-pages	Y
++gnumaniak	Y
+ SysVinit	Y
+ acl		Y
+ apmd		Y

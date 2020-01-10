@@ -1,0 +1,21 @@
+diff -pruN man-pages-ja-20120515.orig/manual/iptables/man8/iptables.8 man-pages-ja-20120515/manual/iptables/man8/iptables.8
+--- man-pages-ja-20120515.orig/manual/iptables/man8/iptables.8	2012-05-18 18:33:30.000000000 +0900
++++ man-pages-ja-20120515/manual/iptables/man8/iptables.8	2012-05-18 18:36:24.000000000 +0900
+@@ -462,13 +462,12 @@ グは \fBSYN ACK FIN RST URG PSH ALL NO
+ は、SYN フラグが設定され ACK, FIN, RST フラグが設定されていない パケットにのみマッチする。
+ .TP 
+ \fB[!] \-\-syn\fP
+-SYN ビットが設定され ACK と RST ビットがクリアされている TCP パケットに
+-のみマッチする。このようなパケットは TCP 接続の開始要求に使われる。例え
++SYN ビットが設定され ACK、RST および FIN ビットがクリアされている TCP パケットに
++マッチする。このようなパケットは TCP 接続の開始要求に使われる。例え
+ ば、あるインターフェースに入ってくるこのようなパケットをブロックすれば、
+ 内側への TCP 接続は禁止されるが、外側への TCP 接続には影響しない。 これ
+-は \fB\-\-tcp\-flags SYN,RST,ACK SYN\fP と等しい。 "\-\-syn" の前に "!" フラグ
+-を置くと、 SYN ビットがクリアされ ACK と RST ビットが設定されている
+-TCP パケットにのみマッチする。
++は \fB\-\-tcp\-flags SYN,RST,ACK,FIN SYN\fP と等しい。 "\-\-syn" の前に "!" フラグ
++を置くと、この条件を満たさないパケットにマッチする。
+ .TP 
+ \fB[!] \-\-tcp\-option \fP\fInumber\fP
+ TCP オプションが設定されている場合にマッチする。

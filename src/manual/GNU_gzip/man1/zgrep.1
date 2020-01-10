@@ -1,0 +1,30 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.\"
+.\" Japanese Version Copyright (c) 1993-2012
+.\" NetBSD jman proj., Yuichi SATO and Akihiro MOTOKI
+.\"         all rights reserved.   
+.\" Translated 1993-10-15, NetBSD jman proj. <jman@spa.is.uec.ac.jp>
+.\" Updated 2000-06-10, Yuichi SATO <sato@complex.eng.hokudai.ac.jp>
+.\" Updated 2012-04-20, Akihiro MOTOKI <amotoki@gmail.com>, gzip 1.4
+.\"
+.TH ZGREP 1   
+.SH 名前
+zgrep \- 圧縮されている可能性のあるファイルで、正規表現の検索をする
+.SH 書式
+\fBzgrep\fP [ grep_options ] \fB[\ \-e\ ]\fP\fI pattern\fP \fIfilename\fP.\|.\|.
+.SH 説明
+\fIzgrep\fP は、compress や gzip で圧縮されたファイルに対して \fIgrep\fP を呼び出す。
+指定されたすべてのオプションは \fIgrep\fP に直接渡される。
+ファイルが指定されない場合は、標準入力を (必要であれば伸長した後で) \fIgrep\fP に渡す。
+それ以外の場合は、指示されたファイルを (必要であれば伸長した後で) \fIgrep\fP に渡す。
+.PP
+環境変数 GREP が設定されている場合、
+\fIzgrep\fP は環境変数で指定された内容を \fIgrep\fP プログラムとして呼び出す。
+.SH 著者
+Charles Levert (charles@comm.polymtl.ca)
+.SH 関連項目
+grep(1), gzexe(1), gzip(1), zdiff(1), zforce(1), zmore(1), znew(1)

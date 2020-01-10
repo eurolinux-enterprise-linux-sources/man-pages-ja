@@ -1,0 +1,50 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH IPTABLES\-RESTORE 8 "Jan 04, 2001" "" ""
+.\"
+.\" Man page written by Harald Welte <laforge@gnumonks.org>
+.\" It is based on the iptables man page.
+.\"
+.\"	This program is free software; you can redistribute it and/or modify
+.\"	it under the terms of the GNU General Public License as published by
+.\"	the Free Software Foundation; either version 2 of the License, or
+.\"	(at your option) any later version.
+.\"
+.\"	This program is distributed in the hope that it will be useful,
+.\"	but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\"	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\"	GNU General Public License for more details.
+.\"
+.\"	You should have received a copy of the GNU General Public License
+.\"	along with this program; if not, write to the Free Software
+.\"	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+.\"
+.\"
+.SH 名前
+iptables\-restore \- IP テーブルを復元する
+.SH 書式
+\fBiptables\-restore \fP[\-c] [\-n]
+.br
+.SH 説明
+.PP
+\fBiptables\-restore\fP は標準入力で指定されたデータから IP テーブルを復元するために使われる。 ファイルから読み込むためには、
+シェルで提供されている I/O リダイレクションを使うこと。
+.TP 
+\fB\-c\fP, \fB\-\-counters\fP
+全てのパケットカウンタとバイトカウンタの値を復元する。
+.TP 
+\fB\-n\fP, \fB\-\-noflush\fP 
+これまでのテーブルの内容をフラッシュしない。 指定されない場合、 \fBiptables\-restore\fP は、これまでの各 IP
+テーブルの内容を全てフラッシュ (削除) する。
+.SH バグ
+iptables\-1.2.1 リリースでは知られていない。
+.SH 作者
+Harald Welte <laforge@gnumonks.org>
+.SH 関連項目
+\fBiptables\-save\fP(8), \fBiptables\fP(8)
+.PP
+より多くの iptables の使用法について 詳細に説明している iptables\-HOWTO。 NAT について詳細に説明している
+NAT\-HOWTO。 内部構造について詳細に説明している netfilter\-hacking\-HOWTO。
